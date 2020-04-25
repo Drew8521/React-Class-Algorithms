@@ -1,0 +1,61 @@
+/**
+ * @param {string} s
+ * @return {boolean}
+ */
+
+/**
+ * @param {string} s
+ * @return {boolean}
+ */
+
+let openBrackets = ["[","{","("];
+let closeBrackets = ["]","}",")"];
+
+var isValid = function(s) {
+    let start = -1;
+    let end = -1;
+    let brackType = -1;
+    for (let i = 0; i < s.length; i++) {
+        for (let k=0; k < 3; k++) {
+            let str = s.substring(i,i+1);
+            if (openBrackets[k]==str && start==-1) {
+                start = i;
+                brackType=k;
+            } if (closeBrackets[k]==str) {
+                if (k==brackType || start==-1) {
+                    end = i+1;         
+                }
+            } console.log(end + " " + start);
+        }  if (end!=-1 && start==-1) {
+                return false;
+            } if (end!=-1 && start!=-1) {
+                console.log(s.substring(end,start));
+                if (!bracket(s.substring(end,start))) {
+                    return false;
+                }
+                i = end-1;
+                start = -1;
+                end = -1;
+            }
+    } 
+    return end == -1 && start == -1;
+}
+
+
+var bracket = function(s) {
+    if (s.length%2!=0) {
+        return false;
+    }
+    for (let i=0; i < (s.length/2); i++) {
+        let check = -1;
+        for (let k = 0; k<3; k++) {
+            if (s.substring(i,i+1)==openBrackets[k]) {
+                check = k;
+            }
+        } 
+        if (closeBrackets[check] != s.substring(s.length-i-1,s.length-i)) {
+            return false;
+        }
+    } 
+    return true;
+};
